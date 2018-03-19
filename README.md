@@ -3,9 +3,7 @@ A simple simulation of an turing machine with one tape. The program has an gui w
 
 The program is written in Java with a mix of english and german speech, this is going to be changed. The UI is currently also fully in german but this is also going to change.
 
-A runnable Jar of the latest version can be find here if you don not want to run it via eclipse:
+A runnable Jar of the latest version can be find [here](https://goo.gl/LATnRH) if you don not want to run it via eclipse.
+If you have questions just ask me! 
 
-https://drive.google.com/open?id=1Q34_bLSdNwxyB6ZJavWqRq6hD-_LH3rx
-
-Cheers,
-Moritz
+Cheers!
