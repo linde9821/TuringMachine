@@ -75,6 +75,9 @@ public class TuringMachine_GUI extends JFrame {
      * Create the frame.
      */
     public TuringMachine_GUI() {
+	String language = System.getProperty("user.language");
+	System.out.println(language);
+
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setBounds(100, 100, 564, 420);
 	contentPane = new JPanel();
@@ -111,7 +114,7 @@ public class TuringMachine_GUI extends JFrame {
 		oneStep();
 	    }
 	});
-	btnSchritt.setBounds(366, 313, 89, 23);
+	btnSchritt.setBounds(366, 313, 141, 23);
 	contentPane.add(btnSchritt);
 
 	lblTape = new JLabel("");
@@ -154,7 +157,6 @@ public class TuringMachine_GUI extends JFrame {
 	contentPane.add(lblAktionBei_1);
 
 	tfZeile = new JTextField();
-	tfZeile.setText("1");
 	tfZeile.setBounds(10, 46, 27, 20);
 	contentPane.add(tfZeile);
 	tfZeile.setColumns(10);
@@ -164,6 +166,12 @@ public class TuringMachine_GUI extends JFrame {
 	    public void actionPerformed(ActionEvent e) {
 		programmliste.clear();
 		programm.clear();
+		programm = new ArrayList<ProgrammLine>();
+		programmliste = new DefaultListModel<String>();
+		List = new JList<String>();
+		List.setModel(programmliste);
+		programmliste.clear();
+		updateListComponent();
 	    }
 	});
 	btnZurcksetzen.setBounds(267, 161, 204, 23);
@@ -294,81 +302,77 @@ public class TuringMachine_GUI extends JFrame {
 	JLabel lblZielzeile2 = new JLabel("Zielzeile");
 	lblZielzeile2.setBounds(322, 11, 46, 14);
 	contentPane.add(lblZielzeile2);
-	contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{tfZeile, comboBoxIfStar, tfGoToLineIfStar, tfGoalLineIfStar, comboBoxIfOne, tfGoalLineIfOne, tfGotoLineIfOne, btnHinzufgen, btnMarkiertenEintragBearbeiten, btnZurcksetzen, tfBand, btnAdd, btnNewButton, tfStartposition, btnSetzen, btnStarten, btnSchritt, btnSchlieen}));
+
+	JButton btnAllesZurcksetzen = new JButton("alles zur\u00FCcksetzen");
+	btnAllesZurcksetzen.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent arg0) {
+		lblTape.setText("");
+
+		position = 0;
+		tape = new ArrayList<TapeCell>();
+		List = new JList<String>();
+		programmliste.clear();
+		List.setModel(programmliste);
+		programm = new ArrayList<ProgrammLine>();
+		programmliste = new DefaultListModel<String>();
+		programmliste.clear();
+		tfBand.setText("");
+		tfStartposition.setText("0");
+
+		renderTape();
+		updateListComponent();
+	    }
+	});
+	btnAllesZurcksetzen.setBounds(366, 347, 141, 23);
+	contentPane.add(btnAllesZurcksetzen);
+	contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { tfZeile, comboBoxIfStar,
+		tfGoToLineIfStar, tfGoalLineIfStar, comboBoxIfOne, tfGoalLineIfOne, tfGotoLineIfOne, btnHinzufgen,
+		btnMarkiertenEintragBearbeiten, btnZurcksetzen, tfBand, btnAdd, btnNewButton, tfStartposition,
+		btnSetzen, btnStarten, btnSchritt, btnSchlieen }));
+
 	setTitle("Turing machine");
 
 	tfZeile.requestFocus();
-	
-	test2();
+
 	updateListComponent();
-    }
 
-    void test2() {
-	position = 4;
-	tape = new ArrayList<TapeCell>();
-	programm = new ArrayList<ProgrammLine>();
-
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.one));
-	tape.add(new TapeCell(TapeCell.one));
-	tape.add(new TapeCell(TapeCell.one));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-
-	renderTape();
-
-	programm.add(new ProgrammLine(1, ProgrammLine.right, 2, ProgrammLine.left, 1));
-	programm.add(new ProgrammLine(2, ProgrammLine.star, 3, ProgrammLine.star, 3));
-	programm.add(new ProgrammLine(3, ProgrammLine.right, 4, ProgrammLine.right, 4));
-	programm.add(new ProgrammLine(4, ProgrammLine.right, 5, ProgrammLine.right, 4));
-	programm.add(new ProgrammLine(5, ProgrammLine.one, 6, ProgrammLine.right, 5));
-	programm.add(new ProgrammLine(6, ProgrammLine.right, 7, ProgrammLine.right, 7));
-	programm.add(new ProgrammLine(7, ProgrammLine.one, 8, ProgrammLine.one, 8));
-	programm.add(new ProgrammLine(8, ProgrammLine.left, 9, ProgrammLine.left, 8));
-	programm.add(new ProgrammLine(9, ProgrammLine.star, 10, ProgrammLine.one, 1));
-	programm.add(new ProgrammLine(10, ProgrammLine.right, 10, ProgrammLine.one, 11));
-	programm.add(new ProgrammLine(11, ProgrammLine.left, 12, ProgrammLine.right, 11));
-	programm.add(new ProgrammLine(12, ProgrammLine.stop, 12, ProgrammLine.stop, 12));
-
-	//perform();
-    }
-
-    void test() {
-	position = 7;
-	tape = new ArrayList<TapeCell>();
-	programm = new ArrayList<ProgrammLine>();
-
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.one));
-	tape.add(new TapeCell(TapeCell.one));
-	tape.add(new TapeCell(TapeCell.one));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.star));
-	tape.add(new TapeCell(TapeCell.one));
-	tape.add(new TapeCell(TapeCell.one));
-	tape.add(new TapeCell(TapeCell.one));
-	tape.add(new TapeCell(TapeCell.one));
-
-	renderTape();
-
-	programm.add(new ProgrammLine(1, ProgrammLine.left, 1, ProgrammLine.star, 2));
-	programm.add(new ProgrammLine(2, ProgrammLine.stop, 2, ProgrammLine.stop, 2));
-
-	perform();
+	if (language.equals("de")) {
+	    lblZielzeile2.setText("Zielzeile");
+	    lblZielzeile.setText("Zielzeile");
+	    btnSetzen.setText("setzen");
+	    btnNewButton.setText("Band z.");
+	    btnAdd.setText("hinz.");
+	    lblBand.setText("Band");
+	    lblStartposition.setText("Startposition");
+	    btnSchlieen.setText("Schließen");
+	    btnZurcksetzen.setText("Regeln zurücksetzen");
+	    lblZeile.setText("Zeile:");
+	    lblAktionBei.setText("Aktion bei \"*\"");
+	    lblAktionBei_1.setText("Aktion bei \"1\"");
+	    btnStarten.setText("Starten");
+	    btnSchritt.setText("ein Schritt");
+	    lblProgramm.setText("Programm:");
+	    btnHinzufgen.setText("Hinzufügen");
+	    btnMarkiertenEintragBearbeiten.setText("markierten Eintrag bearbeiten");
+	} else {
+	    lblZielzeile2.setText("goalline");
+	    lblZielzeile.setText("goalline");
+	    btnSetzen.setText("set");
+	    btnNewButton.setText("reset T.");
+	    btnAdd.setText("add");
+	    lblBand.setText("Tape");
+	    lblStartposition.setText("startposition");
+	    btnSchlieen.setText("close");
+	    btnZurcksetzen.setText("reset rules");
+	    lblZeile.setText("line:");
+	    lblAktionBei.setText("action by \"*\"");
+	    lblAktionBei_1.setText("action by \"1\"");
+	    btnStarten.setText("start");
+	    btnSchritt.setText("one step");
+	    lblProgramm.setText("programm:");
+	    btnHinzufgen.setText("add");
+	    btnMarkiertenEintragBearbeiten.setText("edit marked rule");
+	}
     }
 
     boolean stoponeStep = false;
@@ -424,12 +428,12 @@ public class TuringMachine_GUI extends JFrame {
 	    }
 
 	    renderTape();
-	    
+
 	    steps++;
 	}
-	
+
 	JOptionPane.showMessageDialog(null, "Programm ist beendet! " + steps + " Schritte!");
-	
+
     }
 
     private void renderTape() {
@@ -654,7 +658,7 @@ public class TuringMachine_GUI extends JFrame {
     private void resetTape() {
 	tape.clear();
 	this.position = 0;
-	
+
 	tfStartposition.setText("0");
 	renderTape();
     }
