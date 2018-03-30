@@ -330,9 +330,10 @@ public class TuringMachine_GUI extends JFrame {
 		btnMarkiertenEintragBearbeiten, btnZurcksetzen, tfBand, btnAdd, btnNewButton, tfStartposition,
 		btnSetzen, btnStarten, btnSchritt, btnSchlieen }));
 
-	setTitle("Turing machine");
+	setTitle("Turing Machine");
 
 	tfZeile.requestFocus();
+	tfZeile.setText("1");
 
 	updateListComponent();
 
